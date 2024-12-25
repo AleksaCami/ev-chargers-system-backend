@@ -14,4 +14,9 @@ export default registerAs(DATABASE_CONFIG, () => ({
     schema: process.env.POSTGRES_DB,
     logging: process.env.DATABASE_LOGGING === 'true'
   },
+  redis: {
+    host: process.env.REDIS_HOST || 'localhost',
+    port: process.env.REDIS_PORT || 6379,
+    database: process.env.REDIS_DB || 0,
+  },
 }))
