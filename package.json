@@ -17,7 +17,17 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "db:migrate:create": "pnpm run typeorm migration:create",
+    "db:migrate:new": "pnpm run typeorm migration:generate -d src/datasource.ts",
+    "db:migrate": "pnpm run typeorm migration:run -d src/datasource.ts",
+    "db:migrate:rollback": "pnpm run typeorm migration:revert -d src/datasource.ts",
+    "db:schema:drop": "pnpm run typeorm schema:drop -d src/datasource.ts",
+    "db:seed:config": "ts-node ./node_modules/@concepta/typeorm-seeding/dist/cli.js config -c src/database/seeding.config.ts",
+    "db:seed": "ts-node ./node_modules/@concepta/typeorm-seeding/dist/cli.js seed -c src/database/seeding.config.ts",
+    "db:format": "pnpm run db:schema:drop && pnpm run db:migrate && pnpm run db:seed",
+    "db:cache:clear": "pnpm run typeorm cache:clear -d src/datasource.ts"
   },
   "dependencies": {
     "@nestjs/bull": "^10.2.3",
