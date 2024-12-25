@@ -1,10 +1,19 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 import { OfficeEntity } from './office.entity';
 
 
 @Entity('charging_stations')
-export class ChargingStationEntity {
+export class ChargingStationEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

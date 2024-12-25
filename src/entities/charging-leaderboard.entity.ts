@@ -1,9 +1,18 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 import { UserEntity } from './user.entity';
 
 @Entity('charging_leaderboard')
-export class ChargingLeaderboardEntity {
+export class ChargingLeaderboardEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
