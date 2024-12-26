@@ -14,6 +14,7 @@ import authConfig from './config/auth.config';
 import databaseConfig from './config/database.config';
 import globalConfig from './config/global.config';
 import { AuthModule } from './modules/auth/auth.module';
+import { OfficeModule } from './modules/office/office.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -42,7 +43,8 @@ import { UserModule } from './modules/user/user.module';
     RedisModule,
     BullQueueModule,
     AuthModule,
-    UserModule
+    UserModule,
+    OfficeModule
   ],
   controllers: [AppController],
   providers: [AppService, RedisService, ResponseService],

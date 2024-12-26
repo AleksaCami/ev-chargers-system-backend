@@ -1,6 +1,6 @@
 import { Exclude, Expose, Type } from 'class-transformer';
 
-import { OfficeResponseDto } from './office.response.dto';
+import { OfficeResponseDto } from '../../office/dto/office.response.dto';
 
 export class UserResponseDto {
   @Expose()

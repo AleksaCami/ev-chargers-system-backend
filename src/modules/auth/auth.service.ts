@@ -10,7 +10,7 @@ import { UserEntity } from '../../entities';
 import { AccessTokenRepository } from '../../repositories/access-token.repository';
 import { RefreshTokenRepository } from '../../repositories/refresh-token.repository';
 import { UserRepository } from '../../repositories/user.repository';
-import { UserService } from '../user/services/user.service';
+import { UserService } from '../user/user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { AccountRegistrationdata, AuthTokens, AuthUser, JwtPayload } from './types/auth.types';
 
@@ -121,11 +121,11 @@ export class AuthService {
 
     const bearerTokens = {
       accessToken: this.jwtService.sign({
-        jti: accessToken.id,
+        jti: accessToken.token,
         sub: user.id,
       }),
       refreshToken: this.jwtService.sign({
-        jti: refreshToken.id,
+        jti: refreshToken.token,
         sub: accessToken.id,
       }),
     };

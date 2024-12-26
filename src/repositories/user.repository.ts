@@ -15,8 +15,8 @@ export class UserRepository extends BaseRepository<UserEntity> {
   }
 
   /**
- * Finds account by id.
- * @param {string} id
+ * Finds user by id.
+ * @param {number} id
  * @returns User if found.
  */
   findById(id: number): Promise<UserEntity | null> {
