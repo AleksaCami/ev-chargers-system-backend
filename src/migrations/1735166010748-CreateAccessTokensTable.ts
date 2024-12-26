@@ -26,16 +26,16 @@ export class CreateAccessTokensTable1735166010748 implements MigrationInterface 
 					},
 					{
 						name: 'expires_at',
-						type: 'timestamp',
+						type: 'timestamp with time zone',
 					},
 					{
 						name: 'created_at',
-						type: 'timestamp',
+						type: 'timestamp with time zone',
 						default: 'CURRENT_TIMESTAMP',
 					},
 					{
 						name: 'updated_at',
-						type: 'timestamp',
+						type: 'timestamp with time zone',
 						default: 'CURRENT_TIMESTAMP',
 					},
 				],

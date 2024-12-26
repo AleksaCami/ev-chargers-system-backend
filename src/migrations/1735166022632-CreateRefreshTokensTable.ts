@@ -15,7 +15,7 @@ export class CreateRefreshTokensTable1735166022632 implements MigrationInterface
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'user_id',
+						name: 'access_token_id',
 						type: 'int',
 						isNullable: false,
 					},
@@ -26,28 +26,28 @@ export class CreateRefreshTokensTable1735166022632 implements MigrationInterface
 					},
 					{
 						name: 'expires_at',
-						type: 'timestamp',
+						type: 'timestamp with time zone',
 					},
 					{
 						name: 'created_at',
-						type: 'timestamp',
+						type: 'timestamp with time zone',
 						default: 'CURRENT_TIMESTAMP',
 					},
 					{
 						name: 'updated_at',
-						type: 'timestamp',
+						type: 'timestamp with time zone',
 						default: 'CURRENT_TIMESTAMP',
 					},
 				],
 			}),
 		);
 
-		// Create foreign key for 'user_id'
+		// Create foreign key for 'access_token_id'
 		await queryRunner.createForeignKey(
 			'refresh_tokens',
 			new TableForeignKey({
-				columnNames: ['user_id'],
-				referencedTableName: 'users',
+				columnNames: ['access_token_id'],
+				referencedTableName: 'access_tokens',
 				referencedColumnNames: ['id'],
 				onDelete: 'CASCADE',
 			}),
@@ -56,9 +56,9 @@ export class CreateRefreshTokensTable1735166022632 implements MigrationInterface
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		const table = await queryRunner.getTable('refresh_tokens');
-		const userForeignKey = table.foreignKeys.find(fk => fk.columnNames.indexOf('user_id') !== -1);
-		if (userForeignKey) {
-			await queryRunner.dropForeignKey('refresh_tokens', userForeignKey);
+		const accessTokenForeignKey = table.foreignKeys.find(fk => fk.columnNames.indexOf('access_token_id') !== -1);
+		if (accessTokenForeignKey) {
+			await queryRunner.dropForeignKey('refresh_tokens', accessTokenForeignKey);
 		}
 
 		await queryRunner.dropTable('refresh_tokens');

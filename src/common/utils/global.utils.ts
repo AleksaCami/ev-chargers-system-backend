@@ -59,3 +59,22 @@ export const objectHasAnyKey = (
   return false;
 };
 
+
+/**
+ * Returns a new object containing only keys that are not undefined.
+ * @param object - Object to evaluate.
+ * @returns New object with defined keys.
+ */
+export const filterUndefinedKeys = (
+  object: Record<string, any>,
+): Record<string, any> => {
+  if (isEmpty(object)) return {};
+  const filteredObject = {};
+
+  for (const key of Object.keys(object)) {
+    if (isDefined(object[key])) filteredObject[key] = object[key];
+  }
+
+  return filteredObject;
+};
+

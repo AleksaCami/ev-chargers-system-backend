@@ -4,31 +4,49 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-import { UserEntity } from './user.entity';
+import { AccessTokenEntity } from './oauth-access-token.entity';
 
 @Entity('refresh_tokens')
 export class RefreshTokenEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.id)
-  @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  @Column({ type: 'int', name: 'access_token_id' })
+  accessTokenId: number;
 
   @Column({ name: 'token', type: 'varchar', unique: true })
   token: string;
 
-  @Column({ name: 'expires_at', type: 'timestamp' })
+  @Column({
+    type: 'timestamp with time zone',
+    name: 'expires_at',
+  })
   expiresAt: Date;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  // Timestamps
+  @CreateDateColumn({
+    type: 'timestamp with time zone',
+    name: 'created_at',
+    select: false,
+  })
+  createdAt?: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
+  @UpdateDateColumn({
+    type: 'timestamp with time zone',
+    name: 'updated_at',
+    select: false,
+  })
+  updatedAt?: Date;
+
+  // One -> one
+  @OneToOne(() => AccessTokenEntity, (accessToken) => accessToken.refreshToken, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'access_token_id', referencedColumnName: 'id' }])
+  accessToken?: AccessTokenEntity;
 }

@@ -9,13 +9,17 @@ import { BullQueueModule } from './common/modules/bull-queue/bull-queue.module';
 import { LoggerModule } from './common/modules/logger/logger.module';
 import { RedisModule } from './common/modules/redis/redis.module';
 import { RedisService } from './common/modules/redis/redis.service';
+import { ResponseService } from './common/services/response.service';
+import authConfig from './config/auth.config';
 import databaseConfig from './config/database.config';
 import globalConfig from './config/global.config';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [databaseConfig, globalConfig],
+      load: [databaseConfig, globalConfig, authConfig],
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
@@ -36,9 +40,11 @@ import globalConfig from './config/global.config';
     }),
     LoggerModule,
     RedisModule,
-    BullQueueModule
+    BullQueueModule,
+    AuthModule,
+    UserModule
   ],
   controllers: [AppController],
-  providers: [AppService, RedisService],
+  providers: [AppService, RedisService, ResponseService],
 })
 export class AppModule { }

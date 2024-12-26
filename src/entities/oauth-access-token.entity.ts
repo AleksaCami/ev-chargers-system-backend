@@ -5,10 +5,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+import { RefreshTokenEntity } from './oauth-refresh-token.entity';
 import { UserEntity } from './user.entity';
 
 @Entity('access_tokens')
@@ -23,12 +25,29 @@ export class AccessTokenEntity extends BaseEntity {
   @Column({ name: 'token', type: 'varchar', unique: true })
   token: string;
 
-  @Column({ name: 'expires_at', type: 'timestamp' })
+  @Column({
+    type: 'timestamp with time zone',
+    name: 'expires_at',
+  })
   expiresAt: Date;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  // Timestamps
+  @CreateDateColumn({
+    type: 'timestamp with time zone',
+    name: 'created_at',
+    select: false,
+  })
+  createdAt?: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
+  @UpdateDateColumn({
+    type: 'timestamp with time zone',
+    name: 'updated_at',
+    select: false,
+  })
+  updatedAt?: Date;
+
+
+  // One -> One
+  @OneToOne(() => RefreshTokenEntity, (refreshToken) => refreshToken.accessToken)
+  refreshToken?: RefreshTokenEntity;
 }
